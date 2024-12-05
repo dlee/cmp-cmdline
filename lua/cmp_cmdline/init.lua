@@ -148,7 +148,11 @@ local definitions = {
       -- fix label with `fixed_input`
       for _, item in ipairs(items) do
         if not string.find(item.label, fixed_input, 1, true) then
-          item.label = fixed_input .. item.label
+          if (vim.regex([=[^[#%]]=]):match_str(arglead)) then
+            item.filterText = arglead
+          else
+            item.label = fixed_input .. item.label
+          end
         end
       end
 
